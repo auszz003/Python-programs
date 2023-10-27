@@ -3,12 +3,12 @@ import mysql.connector
 # Connecting from the server
 conn = mysql.connector.connect(user='root',
                                host='localhost',
-                               database='bank', passwd="CHRISTAN100#")
-
-print(conn)
+                               database='bank', passwd="##urmysqlpassword##")
 cursor = conn.cursor()
 
 
+# Functions
+# -Entry functions
 def login(user, passwd):
     cursor.execute(
         "select * from credentials where username = \"" + user + "\"and password = \"" + passwd + "\";")
@@ -20,7 +20,6 @@ def login(user, passwd):
 
 
 def createAcc():
-    # try:
     username = input("Enter Username: ")
     password = input("Enter Password: ")
     name = input("Enter your full name: ")
@@ -40,10 +39,8 @@ def createAcc():
     return 1
 
 
-# except Exception:
-#     return 0
 
-
+# -Menu functions
 def viewAccBal(uid):
     cursor.execute("select balance from account where uid=" + str(uid))
     print("\nCurrent balance: ", cursor.fetchone()[0])
@@ -51,7 +48,6 @@ def viewAccBal(uid):
 
 def withdraw(uid):
     cursor.execute("select balance from account where uid=" + str(uid))
-
     amt = float(input("Enter the amount to withdraw: "))
     if int(cursor.fetchone()[0]) <= amt:
         print("insufficient balance!! ")
@@ -79,6 +75,7 @@ def deleteAcc(uid):
     conn.commit()
 
 
+# Under this comment is the core of the code..All functions are called here...
 def main():
     flag = 0
 
